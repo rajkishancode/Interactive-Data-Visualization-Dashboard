@@ -20,10 +20,11 @@ ChartJs.register(
   datalabels
 );
 
-const BarChart = ({ data: chartData }) => {
-  const barDataset = getBarDataset(chartData);
+const BarChart = ({ barChartData, onBarClick, barLabels }) => {
+  const barDataset = getBarDataset(barChartData);
+
   const data = {
-    labels: ["A", "B", "C", "D", "E", "F"].reverse(),
+    labels: barLabels,
     datasets: [
       {
         label: "Bar Chart",
@@ -39,12 +40,13 @@ const BarChart = ({ data: chartData }) => {
   const options = {
     indexAxis: "y",
 
-    // onClick: (e, elements) => {
-    //   const clickedIndex = elements[0]?.index;
-    //   if (clickedIndex !== undefined) {
-    //     onBarClick(clickedIndex);
-    //   }
-    // },
+    onClick: (event, elements) => {
+      const clickedIndex = elements[0]?.index;
+
+      if (clickedIndex !== undefined) {
+        onBarClick(clickedIndex);
+      }
+    },
 
     scales: {
       x: {
@@ -64,8 +66,7 @@ const BarChart = ({ data: chartData }) => {
       datalabels: {
         display: true,
         align: "end",
-        anchor:"start",
-        
+        anchor: "start",
       },
     },
   };
