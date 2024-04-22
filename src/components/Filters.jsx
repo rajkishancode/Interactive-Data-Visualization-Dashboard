@@ -34,6 +34,12 @@ export const Filters = () => {
           dispatch({ type: "FILTER_BY_DATE_RANGE", payload: value })
         }
       />
+      <button
+        className="flex w-full bg-[#1E293B] rounded-lg text-[#D2C4AF] justify-center items-center "
+        onClick={() => dispatch({ type: "RESET_FILTERS" })}
+      >
+        Reset
+      </button>
     </div>
   );
 };
