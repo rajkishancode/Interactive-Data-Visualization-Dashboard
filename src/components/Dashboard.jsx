@@ -1,24 +1,30 @@
 import React, { useState } from "react";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
-import {useFilter} from "../hooks/useFilter";
+// import {useFilter} from "../hooks/useFilter";
 import {Filters} from "../components/Filters";
-import { useFetchData } from "../hooks/useFetchData";
-
+import { useDashboardContext } from "../context/DashboardContextProvider";
+import {getFilteredGraphData} from "../helper/filters";
 
 const Dashboard = () => {
-   
+const {
+  state: { data, filters },
+} = useDashboardContext();
+
+const barLabels = data[0]?.Features?.map((label) => label);
+
+//first object removed from array as it consist of labels.
+const fetchedData = data.slice(1, data.length - 1);
+
+const filteredData = getFilteredGraphData(fetchedData, filters);
+
+
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const {
-    age,
-    setAge,
-    gender,
-    setGender,
-    dateRange,
-    handleDateChange,
-    filteredData,
-    barLabels,
-  } = useFilter();
+  // const {
+    
+  //   filteredData,
+  //   barLabels,
+  // } = useFilter();
 
   const handleBarClick = (index) => {
     setSelectedIndex(index);
@@ -30,14 +36,7 @@ const Dashboard = () => {
         <h1 className="text-3xl text-center font-bold underline">
           Data Visualization Dashboard
         </h1>
-        <Filters
-          age={age}
-          setAge={setAge}
-          gender={gender}
-          setGender={setGender}
-          dateRange={dateRange}
-          handleDateChange={handleDateChange}
-        />
+        <Filters/>
       </div>
       <div className="flex gap-1">
         <div className="border border-[#D8D8D8] w-full h-full ">

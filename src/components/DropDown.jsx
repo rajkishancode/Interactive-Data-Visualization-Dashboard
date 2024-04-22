@@ -8,7 +8,7 @@ const DropDown = ({ label, options, selectedOption, setSelectedOption }) => {
         <select
           className="bg-[#1E293B]"
           value={selectedOption}
-          onChange={(event) => setSelectedOption(event.target.value)}
+          onChange={setSelectedOption}
         >
           {options?.map(({ id, value }) => (
             <option key={id} value={value}>
