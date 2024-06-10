@@ -1,0 +1,3 @@
+.home-button{
+    @apply mx-4 my-[0] px-4 py-2 bg-[#007bff] text-[white] no-underline rounded hover:bg-[#0056b3]
+}

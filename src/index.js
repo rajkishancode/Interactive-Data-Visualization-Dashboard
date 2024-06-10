@@ -2,13 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import DashboardContextProvider from "./context/DashboardContextProvider";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider, DashboardContextProvider } from "./context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <DashboardContextProvider>
-      <App />
-    </DashboardContextProvider>
+    <Router>
+      <AuthProvider>
+        <DashboardContextProvider>
+          <App />
+        </DashboardContextProvider>
+      </AuthProvider>
+    </Router>
   </React.StrictMode>
 );

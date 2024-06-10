@@ -1,5 +1,6 @@
 import { createContext, useReducer, useContext, useEffect } from "react";
-import { API_URL } from "../helper/constants";
+import { API_URL} from "../helper/constants";
+import {dashboardReducer} from "../reducer";
 
 export const DashboardContext = createContext({
   state: {},
@@ -21,62 +22,6 @@ const initialState = JSON.parse(localStorage.getItem("dashboardData")) || {
   },
 };
 
-const dashboardReducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_SUCCESS":
-      return {
-        ...state,
-        data: action.payload,
-        filteredData: action.payload,
-      };
-    case "FETCH_ERROR":
-      return {
-        ...state,
-        error: "Error fetching data",
-      };
-    case "SET_LOADING_TRUE":
-      return {
-        ...state,
-        loading: true,
-      };
-    case "SET_LOADING_FALSE":
-      return {
-        ...state,
-        loading: false,
-      };
-    case "FILTER_BY_AGE":
-      return {
-        ...state,
-        filters: { ...state.filters, age: action.payload },
-      };
-    case "FILTER_BY_GENDER":
-      return {
-        ...state,
-        filters: { ...state.filters, gender: action.payload },
-      };
-    case "FILTER_BY_DATE_RANGE":
-      return {
-        ...state,
-        filters: { ...state.filters, dateRange: action.payload },
-      };
-
-    case "RESET_FILTERS":
-      return {
-        ...state,
-        filters: {
-          age: "15-25",
-          gender: "Male",
-          dateRange: {
-            startDate: "2022-10-01",
-            endDate: "2022-10-31",
-          },
-        },
-      };
-
-    default:
-      return state;
-  }
-};
 
 const DashboardContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(dashboardReducer, initialState);

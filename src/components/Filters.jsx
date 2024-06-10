@@ -3,8 +3,12 @@ import { AGES, GENDERS } from "../helper/constants";
 import { DropDown } from "./DropDown";
 import Datepicker from "react-tailwindcss-datepicker";
 import { useDashboardContext } from "../context/DashboardContextProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { useAuthContext } from "../context";
 
 export const Filters = () => {
+  const { userLogout } = useAuthContext();
   const { state, dispatch } = useDashboardContext();
   return (
     <div className="flex w-full justify-evenly gap-2 p-2">

@@ -1,17 +1,17 @@
 const getBarDataset = (data) => {
- 
   let labelsLength = data[0]?.Features.length;
   let barGraphDataSum = [];
   for (let i = 0; i < labelsLength; i++) {
-    let finalSum = data.reduce((accu, curr) => accu + parseInt(curr.Features[i]), 0);
+    let finalSum = data.reduce(
+      (accu, curr) => accu + parseInt(curr.Features[i]),
+      0
+    );
     barGraphDataSum.push(finalSum);
   }
   return barGraphDataSum;
 };
 
-
 const getLineDates = (lineData) => {
-
   return lineData.map(({ Day }) => {
     try {
       const date = new Date(Day);
@@ -24,8 +24,7 @@ const getLineDates = (lineData) => {
       console.error("Error formatting date:", error);
     }
   });
-}; 
-
+};
 
 const getFormattedDate = (date) => {
   const creationDate = new Date(date);
@@ -40,4 +39,22 @@ const getFormattedDateRange = (date) => {
   if (!date) return;
   return date.split("-").join("");
 };
-export { getBarDataset, getLineDates, getFormattedDate, getFormattedDateRange };
+
+//url sharing
+const generateChartURL = (filters) => {
+  const url = new URL(window.location.href);
+  url.pathname = "/chart"; // Assuming the chart is displayed on '/chart' route
+  url.searchParams.set("age", filters.age);
+  url.searchParams.set("gender", filters.gender);
+  url.searchParams.set("startDate", filters.dateRange.startDate);
+  url.searchParams.set("endDate", filters.dateRange.endDate);
+  return url.toString();
+};
+
+export {
+  getBarDataset,
+  getLineDates,
+  getFormattedDate,
+  getFormattedDateRange,
+  generateChartURL,
+};
