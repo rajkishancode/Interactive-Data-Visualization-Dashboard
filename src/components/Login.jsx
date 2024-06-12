@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthContext } from "../context";
 import FormTextInput from "./FormTextInput";
 import { toast } from "react-toastify";
@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const { loginUser } = useAuthContext();
-  const navigate = useNavigate();
 
   const [userData, setUserData] = React.useState({
     email: "",
@@ -31,7 +30,7 @@ const Login = () => {
   // Handle change in input fields
   const handleChange = (e) => {
     const { id, value } = e.target;
-    console.log(e.target);
+
     setUserData((prevData) => ({
       ...prevData,
       [id]: value,

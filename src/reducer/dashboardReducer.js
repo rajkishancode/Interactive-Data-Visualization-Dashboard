@@ -9,6 +9,7 @@ const {
   FILTER_BY_GENDER,
   FILTER_BY_DATE_RANGE,
   RESET_FILTERS,
+  SET_FILTERS,
 } = DATA_ACTION_TYPES;
 
 const dashboardReducer = (state, action) => {
@@ -63,9 +64,16 @@ const dashboardReducer = (state, action) => {
         },
       };
 
+    case SET_FILTERS: // Handle setting multiple filters at once
+      return {
+        ...state,
+
+        filters: { ...action.payload },
+      };
+
     default:
       return state;
   }
 };
 
-export {dashboardReducer}
+export { dashboardReducer };

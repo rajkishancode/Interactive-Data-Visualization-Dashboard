@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,23 +8,40 @@ import {
   faUserPlus,
   faChartBar,
   faHome,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 
 const Navbar = () => {
   const { isUserLoggedIn, userLogout } = useAuthContext();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <nav className="flex justify-between items-center bg-[#333] text-[white] p-4">
-      <Link to="/" className="navbar-link font-bold ">
-        VizDash
-      </Link>
+      <div className="flex items-center">
+        <Link to="/" className="navbar-link font-bold text-xl">
+          VizDash
+        </Link>
+        <h1 className="text-xl font-bold ml-4 hidden md:block">
+          Data Visualization Dashboard
+        </h1>
+      </div>
 
-      <h1 className="flex-1 text-3xl text-center font-bold  ">
-        Data Visualization Dashboard
-      </h1>
-      <div className="">
-        <Link to="/">
+      <button onClick={toggleMenu} className="text-2xl md:hidden">
+        <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
+      </button>
+
+      <div
+        className={`flex-col items-center md:flex md:flex-row ${
+          isMenuOpen ? "flex" : "hidden"
+        }`}
+      >
+        <Link to="/" className="navbar-link">
           <FontAwesomeIcon icon={faHome} /> Home
         </Link>
         {isUserLoggedIn ? (

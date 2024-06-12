@@ -1,3 +1,4 @@
 .navbar-link {
   @apply ml-4 text-[white] no-underline bg-none border-none cursor-pointer hover:underline;
 }
+

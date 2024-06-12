@@ -1,6 +1,6 @@
 import { createContext, useReducer, useContext, useEffect } from "react";
-import { API_URL} from "../helper/constants";
-import {dashboardReducer} from "../reducer";
+import { API_URL } from "../helper/constants";
+import { dashboardReducer } from "../reducer";
 
 export const DashboardContext = createContext({
   state: {},
@@ -22,30 +22,31 @@ const initialState = JSON.parse(localStorage.getItem("dashboardData")) || {
   },
 };
 
-
 const DashboardContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(dashboardReducer, initialState);
-  //state saving in local storage
-  localStorage.setItem("dashboardData", JSON.stringify(state));
-
-  const getData = async () => {
-    try {
-      dispatch({ type: "SET_LOADING_TRUE" });
-
-      const response = await fetch(API_URL);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const { data } = await response.json();
-      dispatch({ type: "FETCH_SUCCESS", payload: data });
-    } catch (error) {
-      dispatch({ type: "FETCH_ERROR" });
-    } finally {
-      dispatch({ type: "SET_LOADING_FALSE" });
-    }
-  };
 
   useEffect(() => {
+    localStorage.setItem("dashboardData", JSON.stringify(state));
+  }, [state]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        dispatch({ type: "SET_LOADING_TRUE" });
+
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const { data } = await response.json();
+
+        dispatch({ type: "FETCH_SUCCESS", payload: data });
+      } catch (error) {
+        dispatch({ type: "FETCH_ERROR" });
+      } finally {
+        dispatch({ type: "SET_LOADING_FALSE" });
+      }
+    };
     getData();
   }, []);
 
