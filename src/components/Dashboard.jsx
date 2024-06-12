@@ -17,6 +17,7 @@ const Dashboard = () => {
   } = useDashboardContext();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   const barLabels = data[0]?.Features?.map((label) => label);
   //first object removed from array as it consist of labels.
@@ -54,13 +55,26 @@ const Dashboard = () => {
     }, 100); //delay to ensure state update is complete
   };
 
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
+
   return (
-    <div className="flex ">
-      <div className="min-h-screen">
-        <Filters />
-      </div>
-      <div className="flex w-full h-full flex-wrap">
-        <div className="border border-[#D8D8D8] w-full h-full m-4">
+    <div className="flex min-h-screen overflow-hidden">
+      <Filters
+        isVisible={isFilterVisible}
+        toggleVisibility={toggleFilterVisibility}
+      />
+
+      <div className="flex-grow ml-0 p-4 md:ml-64">
+        <button
+          className="md:hidden bg-gray-600 text-white py-2 px-4 rounded mb-4"
+          onClick={toggleFilterVisibility}
+        >
+          {isFilterVisible ? "Hide Filters" : "Show Filters"}
+        </button>
+
+        <div className="border  border-[#D8D8D8] w-full h-96 overflow-hidden m-4">
           <p className="text-center text-sm text-gray-500 mt-2">
             Click on a bar to view detailed data in the line chart.
           </p>
@@ -70,8 +84,9 @@ const Dashboard = () => {
             barLabels={barLabels}
           />
         </div>
+
         <div
-          className="border-[#D8D8D8] border  w-full h-full m-4"
+          className="border   border-[#D8D8D8]  w-full h-96 overflow-hidden m-4"
           ref={lineChartRef} //attach ref to LineChart
         >
           {selectedIndex !== null && (

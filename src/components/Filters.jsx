@@ -5,10 +5,14 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { useDashboardContext } from "../context/DashboardContextProvider";
 import ShareURLButton from "./ShareURLButton/ShareURLButton";
 
-export const Filters = () => {
+export const Filters = ({ isVisible, toggleVisibility }) => {
   const { state, dispatch } = useDashboardContext();
   return (
-    <div className="flex flex-col w-64 p-4 my-4 h-full border border-slate-500 ">
+    <div
+      className={`fixed  left-0 flex flex-col w-64 p-4 my-4 h-screen  border-slate-500 bg-white shadow-lg z-50 ${
+        isVisible ? "block" : "hidden"
+      } md:block`}
+    >
       <h2 className="mb-4 text-center text-xl font-bold">Filters</h2>
       <div className="flex-grow">
         <DropDown
@@ -37,14 +41,20 @@ export const Filters = () => {
             dispatch({ type: "FILTER_BY_DATE_RANGE", payload: value })
           }
         />
-        <button
-          className="w-full my-2 bg-[#1E293B] rounded-lg py-2 text-center text-[#D2C4AF]"
-          onClick={() => dispatch({ type: "RESET_FILTERS" })}
-        >
-          Reset
-        </button>
-        <ShareURLButton />
       </div>
+      <button
+        className="w-full my-2 bg-[#1E293B] rounded-lg py-2 text-center text-[#D2C4AF]"
+        onClick={() => dispatch({ type: "RESET_FILTERS" })}
+      >
+        Reset
+      </button>
+      <ShareURLButton />
+      <button
+        onClick={toggleVisibility}
+        className="md:hidden mt-4 bg-gray-600 text-white py-2 px-4 rounded"
+      >
+        close
+      </button>
     </div>
   );
 };
