@@ -64,6 +64,7 @@ const Login = () => {
   const loginAsGuest = (e) => {
     e.preventDefault();
     setUserData(guestUserData);
+    loginUser(guestUserData);
     toast.success("Logged in as guest!");
 
     // Save guest login data to local storage

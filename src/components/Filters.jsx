@@ -15,6 +15,14 @@ export const Filters = ({ isVisible, toggleVisibility }) => {
     >
       <h2 className="mb-4 text-center text-xl font-bold">Filters</h2>
       <div className="flex-grow">
+        <Datepicker
+          primaryColor={"blue"}
+          className="cursor-pointer my-4"
+          value={state.filters.dateRange}
+          onChange={(value) =>
+            dispatch({ type: "FILTER_BY_DATE_RANGE", payload: value })
+          }
+        />
         <DropDown
           label="Age"
           options={AGES}
@@ -30,15 +38,6 @@ export const Filters = ({ isVisible, toggleVisibility }) => {
           selectedOption={state.filters.gender}
           setSelectedOption={(e) =>
             dispatch({ type: "FILTER_BY_GENDER", payload: e.target.value })
-          }
-        />
-
-        <Datepicker
-          primaryColor={"blue"}
-          className="cursor-pointer my-4"
-          value={state.filters.dateRange}
-          onChange={(value) =>
-            dispatch({ type: "FILTER_BY_DATE_RANGE", payload: value })
           }
         />
       </div>

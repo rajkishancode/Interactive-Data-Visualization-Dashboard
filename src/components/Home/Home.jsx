@@ -4,7 +4,7 @@ import "./Home.css";
 import { useAuthContext } from "../../context/AuthContext";
 const Home = () => {
   const { isUserLoggedIn } = useAuthContext();
-  console.log({ isUserLoggedIn });
+
   return (
     <div className="text-center mt-20">
       {isUserLoggedIn ? (
